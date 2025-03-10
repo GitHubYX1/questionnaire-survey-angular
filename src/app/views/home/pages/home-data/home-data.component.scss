@@ -1,0 +1,24 @@
+.user-data {
+  padding-bottom: 20px;
+
+  .user-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 30px;
+  }
+  .stat-item {
+    padding-left: 35px;
+    p {
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #898989;
+    }
+    span {
+      font-size: 24px;
+    }
+  }
+}
+
+.ant-table-cell {
+  text-align: center;
+}

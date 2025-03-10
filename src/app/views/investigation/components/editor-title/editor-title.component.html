@@ -1,0 +1,16 @@
+<nz-modal [(nzVisible)]="visible" nzWidth="860px" nzTitle="问卷导入" [nzMaskClosable]="false" (nzOnCancel)="visible = false" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <div class="modal-box">
+      <div class="editor-title flex" style="margin-bottom: 30px">
+        <div class="title">标题：</div>
+        <input nz-input [(ngModel)]="titleValue" />
+      </div>
+      <div class="editor-title flex">
+        <div class="title">说明</div>
+        <div class="title-rich">
+          <rich-tinymce [inputValue]="contentValue" (inputValueChange)="inputValueChange($event)"></rich-tinymce>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

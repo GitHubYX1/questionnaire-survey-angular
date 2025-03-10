@@ -1,0 +1,26 @@
+<nz-modal [(nzVisible)]="copyVisible" nzWidth="800px" nzTitle="复制向前关联" [nzMaskClosable]="false" (nzOnCancel)="copyVisible = false" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <div class="copy-box">
+      <nz-table #basicTable [nzData]="tableData" [nzFrontPagination]="false" [nzBordered]="true">
+        <thead>
+          <tr>
+            <th
+              nzLabel="多选"
+              [nzChecked]="childIds.length === basicTable.data.length"
+              [nzIndeterminate]="childIds.length !== 0 && childIds.length < basicTable.data.length"
+              [width]="40"
+              (nzCheckedChange)="onAllChecked($event)"
+            ></th>
+            <th nzAlign="center">题目标题</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of basicTable.data" (click)="onItemChecked(item.id)">
+            <td [nzChecked]="setOfChecked(item.id)" (nzCheckedChange)="nzCheckedChange(item.id, $event)"></td>
+            <td [innerHTML]="item.title" nzAlign="center"></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </ng-container>
+</nz-modal>

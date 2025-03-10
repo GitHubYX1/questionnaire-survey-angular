@@ -1,0 +1,17 @@
+<div class="data-header flex-between align-items">
+  <nz-select [(ngModel)]="surveyIdData" [nzOptions]="storeOptions" nzShowSearch style="width: 380px" (ngModelChange)="ngModelChange($event)"></nz-select>
+  <div class="anv-list flex align-items" nz-menu>
+    <a class="anv-item" nz-menu-item nzMatchRouter routerLink="/data/analysis" nzSelected>
+      <nz-icon nzType="bar-chart" nzTheme="outline"></nz-icon>
+      <div>数据分析</div>
+    </a>
+    <a class="anv-item" nz-menu-item nzMatchRouter routerLink="/data/answer">
+      <nz-icon nzType="laptop" nzTheme="outline"></nz-icon>
+      <div>答题数据</div>
+    </a>
+  </div>
+  <div class="option flex align-items" nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="返回" (click)="quit()">
+    <nz-icon nzType="export" nzTheme="outline"></nz-icon>
+    <span>返回</span>
+  </div>
+</div>

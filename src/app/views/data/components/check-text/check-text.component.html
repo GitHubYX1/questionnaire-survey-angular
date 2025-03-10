@@ -1,0 +1,18 @@
+<nz-modal [(nzVisible)]="checkShow" nzWidth="50%" [nzTitle]="titleData" [nzMaskClosable]="false" (nzOnCancel)="checkShow = false" [nzFooter]="null">
+  <ng-container *nzModalContent>
+    <nz-table #basicTable [nzData]="checkData" nzBordered [nzShowPagination]="checkData.length <= 10 ? false : true">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>答案文本</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of basicTable.data">
+          <td>{{ item.xh }}</td>
+          <td>{{ item.count }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+</nz-modal>

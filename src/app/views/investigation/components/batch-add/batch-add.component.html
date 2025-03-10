@@ -1,0 +1,7 @@
+<nz-modal [(nzVisible)]="visible" nzWidth="500px" nzTitle="选项批量添加" [nzMaskClosable]="false" (nzOnCancel)="visible = false" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <div class="batch-box">
+      <textarea nz-input rows="8" [(ngModel)]="optionText"></textarea>
+    </div>
+  </ng-container>
+</nz-modal>

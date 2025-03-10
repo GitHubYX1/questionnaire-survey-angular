@@ -1,0 +1,5 @@
+<div class="slider-text flex-between" *ngIf="textShow">
+  <span>{{ min.content }}</span>
+  <span>{{ max.content }}</span>
+</div>
+<nz-slider [nzMin]="min.id" [nzMax]="max.id" [(ngModel)]="value" (ngModelChange)="ngModelChange($event)"></nz-slider>

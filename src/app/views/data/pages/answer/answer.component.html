@@ -1,0 +1,38 @@
+<nz-card class="answer-index">
+  <screen-item (screenChange)="screenChange($event)"></screen-item>
+  <div class="answer-operate flex-between">
+    <span>问卷答案</span>
+    <button nz-button *ngIf="answerData.length !== 0" nzType="primary" [nzLoading]="exportLoading" (click)="download()">下载答案数据</button>
+  </div>
+  <nz-table #basicTable [nzData]="answerData" nzBordered [nzShowPagination]="answerData.length <= 10 ? false : true">
+    <thead>
+      <tr>
+        <th>答卷编号</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>答题用时</th>
+        <th nzWidth="100px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{ item.answerId }}</td>
+        <td>{{ item.startTime }}</td>
+        <td>{{ item.endTime }}</td>
+        <td>{{ item.consumTime }}</td>
+        <td>
+          <div class="record-operate">
+            <span nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="查看详情" (click)="editClick(item.surveyId, item.answerId)">
+              <nz-icon nzType="eye" nzTheme="outline" />
+            </span>
+            <span nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="删除答卷">
+              <span nz-popconfirm nzPopconfirmTitle="是否删除答卷？" nzOkText="是" nzCancelText="否" (nzOnConfirm)="courseDelete(item.surveyId, item.answerId)">
+                <nz-icon nzType="delete" nzTheme="outline" />
+              </span>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

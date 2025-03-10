@@ -1,0 +1,45 @@
+<div class="content-box">
+  <div class="content-header"><span>首页</span></div>
+  <div class="user-data flex-between align-items">
+    <div class="flex align-items">
+      <nz-avatar [nzSrc]="userStore.avatar" [nzSize]="64" />
+      <span class="user-name">{{ userStore.name }}</span>
+    </div>
+    <div class="stat-list flex">
+      <div class="stat-item">
+        <p>问卷数</p>
+        <span>{{ surveyStore.surveyData.length }}</span>
+      </div>
+      <div class="stat-item">
+        <p>答题数</p>
+        <span>{{ getAnswerNum("add") }}</span>
+      </div>
+    </div>
+  </div>
+  <nz-card>
+    <nz-table #basicTable [nzData]="answerData" [nzFrontPagination]="false" [nzBordered]="true">
+      <thead>
+        <tr style="text-align: center">
+          <th>问卷id</th>
+          <th>答案id</th>
+          <th>问卷名称</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>答题用时</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of basicTable.data">
+          <td>{{ item.surveyId }}</td>
+          <td>{{ item.answerId }}</td>
+          <td>{{ item.surveyTitle }}</td>
+          <td>{{ item.startTime }}</td>
+          <td>{{ item.endTime }}</td>
+          <td>{{ item.consumTime }}</td>
+          <td><button nz-button nzType="link" nzSize="small" (click)="editClick(item.surveyId, item.answerId)">查看答案</button></td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</div>

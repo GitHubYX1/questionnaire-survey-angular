@@ -1,0 +1,41 @@
+<div class="screen">
+  <div class="screen-head" (click)="screenShow = !screenShow"><nz-icon nzType="partition" nzTheme="outline"></nz-icon>数据筛选</div>
+  <div class="screen-box" [hidden]="screenShow">
+    <div class="screen-arrow"><i></i></div>
+    <div class="screen-label">题目筛选：</div>
+    <div class="screen-subject">
+      <div class="screen-condition">
+        <nz-radio-group [(ngModel)]="conditionValue" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="and">且 </label>
+          <label nz-radio-button nzValue="or">或 </label>
+        </nz-radio-group>
+        <button nz-button (click)="addCondition()">添加条件</button>
+      </div>
+      <div *ngFor="let item of screenData; let i = index" class="screen-item flex align-items">
+        <nz-select nzPlaceHolder="请选择" class="screen-select" nzShowSearch [(ngModel)]="item.value" (ngModelChange)="ngModelChange(i, $event)">
+          @for (subItem of screenQuestion; track subItem) {
+            <nz-option [nzValue]="subItem.id" [nzLabel]="subItem.title" [nzDisabled]="disabledMethod(subItem.id, item.value)"> </nz-option>
+          }
+        </nz-select>
+        <nz-select nzPlaceHolder="请选择" class="screen-select" [(ngModel)]="item.answer" *ngIf="item.answer">
+          @for (subItem of item.option; track subItem) {
+            <nz-option [nzValue]="subItem.id" [nzLabel]="subItem.content"> </nz-option>
+          }
+        </nz-select>
+        <button nz-button nzType="primary" nzDanger (click)="removeCondition(i)">删除</button>
+      </div>
+    </div>
+    <div class="screen-label">提交时间：</div>
+    <div class="screen-item flex align-items">
+      <div class="screen-content">
+        <nz-range-picker [(ngModel)]="date"></nz-range-picker>
+      </div>
+    </div>
+    <div class="screen-item flex align-items">
+      <div class="screen-content">
+        <button nz-button style="margin-right: 20px" (click)="reset()">重置</button>
+        <button nz-button nzType="primary" (click)="screenClick()">查询</button>
+      </div>
+    </div>
+  </div>
+</div>

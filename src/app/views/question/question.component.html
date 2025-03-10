@@ -1,0 +1,58 @@
+<div class="question">
+  <header class="question-header" *ngIf="title">
+    <h2 class="header-title">{{ title }}</h2>
+  </header>
+  <section class="question-section">
+    <div class="question-content" *ngIf="content && pageIndex === 0" [innerHTML]="content"></div>
+    <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 16 }" [nzLoading]="questionData.length === 0">
+      <form nz-form nzLayout="vertical" [formGroup]="formState">
+        <ng-container *ngFor="let item of questionData[pageIndex]; let i = index">
+          <div class="question-item" [id]="'item-' + item.id" *ngIf="item.isVisible">
+            @if (item.type === typeEnum.PARAGRAPH) {
+              <div [innerHTML]="item.title"></div>
+            } @else if (matrixOptionShow(item.type)) {
+              <div class="ant-form-item">
+                <div class="matrix-title">{{ item.title }}</div>
+                <matrix-item [question]="item" [formGroup]="formState"></matrix-item>
+              </div>
+            } @else {
+              <nz-form-item>
+                <nz-form-label [nzRequired]="item.must === 1">{{ item.title }}</nz-form-label>
+                <nz-form-control [ngSwitch]="item.type" [nzErrorTip]="nzErrorTip(item.id)">
+                  <nz-radio-group class="grid" [ngStyle]="generateColumn(item.column)" *ngSwitchCase="typeEnum.RADIO" [formControlName]="item.id" (ngModelChange)="changeAnswer(item.id, $event)">
+                    <label class="flex item-option" nz-radio *ngFor="let subItem of filterAnswer(item.hideNum, item.option)" [nzValue]="subItem.id">
+                      {{ subItem.content }}
+                    </label>
+                  </nz-radio-group>
+                  <nz-checkbox-group class="grid" [ngStyle]="generateColumn(item.column)" *ngSwitchCase="typeEnum.CHECKBOX" [formControlName]="item.id" (ngModelChange)="changeAnswer(item.id, $event)">
+                    <label class="flex item-option" nz-checkbox *ngFor="let subItem of filterAnswer(item.hideNum, item.option)" [nzValue]="subItem.id">
+                      {{ subItem.content }}
+                    </label>
+                  </nz-checkbox-group>
+                  <nz-select class="drop-down" nzPlaceHolder="请选择下拉列表" *ngSwitchCase="typeEnum.DROP" [formControlName]="item.id" (ngModelChange)="changeAnswer(item.id, $event)">
+                    @for (subItem of filterAnswer(item.hideNum, item.option); track subItem) {
+                      <nz-option [nzValue]="subItem.id" [nzLabel]="subItem.content"> </nz-option>
+                    }
+                  </nz-select>
+                  <nz-rate *ngSwitchCase="typeEnum.SCORE" [nzCount]="item.option.length" [formControlName]="item.id" (ngModelChange)="changeAnswer(item.id, $event)"></nz-rate>
+                  <ng-container *ngSwitchCase="typeEnum.FILL">
+                    <input nz-input *ngIf="item.column === 1; else elseTemplate" [formControlName]="item.id" />
+                    <ng-template #elseTemplate>
+                      <textarea nz-input [nzAutosize]="{ minRows: item.column }" [formControlName]="item.id"></textarea>
+                    </ng-template>
+                  </ng-container>
+                  <slider-item *ngSwitchCase="typeEnum.SLIDER" [min]="item.option[0]" [max]="item.option[1]" [formControlName]="item.id"></slider-item>
+                </nz-form-control>
+              </nz-form-item>
+            }
+          </div>
+        </ng-container>
+      </form>
+      <button nz-button *ngIf="pageIndex !== 0" nzBlock nzSize="large" (click)="prevPage()" style="margin-bottom: 15px">上一页</button>
+      <button nz-button *ngIf="pageIndex === questionData.length - 1; else elseButton" nzType="primary" nzBlock nzSize="large" (click)="submitTo(true)">提交</button>
+      <ng-template #elseButton>
+        <button nz-button nzType="primary" nzBlock nzSize="large" (click)="submitTo(false)">下一页</button>
+      </ng-template>
+    </nz-skeleton>
+  </section>
+</div>

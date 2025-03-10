@@ -1,0 +1,29 @@
+<div class="matrix-item" [formGroup]="formGroup">
+  <div class="matrix-option-list">
+    @for (item of question?.option; track $index) {
+      <div class="matrix-option-item" :key="item.id">{{ item.content }}</div>
+    }
+  </div>
+  @for (item of question?.children; track $index) {
+    <nz-form-item (name)="(item.id)">
+      <nz-form-label [nzRequired]="question?.must === 1">{{ item.title }}</nz-form-label>
+      <nz-form-control nzErrorTip="请完成该评价">
+        @if (item.type === typeEnum.MATRIX_RADIO) {
+          <nz-radio-group class="matrix-question-list" [formControlName]="item.id">
+            @for (subItem of item.option; track $index) {
+              <label class="flex item-option" nz-radio [nzValue]="subItem.id"></label>
+            }
+          </nz-radio-group>
+        } @else if (item.type === typeEnum.MATRIX_CHECKBOX) {
+          <nz-checkbox-group class="matrix-question-list" [formControlName]="item.id">
+            @for (subItem of item.option; track $index) {
+              <label class="flex item-option" nz-checkbox [nzValue]="subItem.id"></label>
+            }
+          </nz-checkbox-group>
+        } @else {
+          <slider-item [min]="item.option[0]" [max]="item.option[1]" [textShow]="false" [formControlName]="item.id"></slider-item>
+        }
+      </nz-form-control>
+    </nz-form-item>
+  }
+</div>

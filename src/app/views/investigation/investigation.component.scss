@@ -1,0 +1,100 @@
+.investigation {
+  width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.go-back {
+  cursor: pointer;
+}
+
+.header-button {
+  width: 220px;
+}
+
+.release {
+  background: #0d0d0d;
+  color: #fff;
+  border-color: #0d0d0d;
+
+  &:hover,
+  &:first {
+    color: #fff;
+    border-color: #0d0d0d;
+  }
+}
+
+.investigation-header {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #efefef;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.investigation-content {
+  height: calc(100% - 60px);
+}
+
+.investigation-panel {
+  width: 300px;
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 15px;
+  float: left;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.investigation-editor {
+  width: 1060px;
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  background: #fff;
+  float: right;
+}
+
+.editor-top {
+  padding: 15px;
+  border-bottom: 1px solid #efefef;
+  cursor: pointer;
+}
+
+.investigation-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.investigation-intro {
+  margin-top: 10px;
+}
+
+.editor-empty {
+  padding: 30px;
+}
+
+.survey-paging {
+  font-size: 16px;
+  padding: 20px 10px 10px 10px;
+  border-bottom: 1px solid #efefef;
+  .paging-menu {
+    text-align: left;
+    height: 30px;
+    line-height: 30px;
+  }
+  .paging-insert {
+    color: #40a9ff;
+    cursor: pointer;
+    text-decoration: underline;
+    display: none;
+  }
+  &:hover .paging-insert {
+    display: block;
+  }
+}

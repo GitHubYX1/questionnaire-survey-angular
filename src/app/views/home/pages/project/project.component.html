@@ -1,0 +1,47 @@
+<div class="project-box flex-between">
+  <button nz-button nzType="primary" nzSize="large" style="width: 200px" (click)="pushInvestigation('')">+ 新建</button>
+  <div class="project-content">
+    <div class="content-header flex-between align-items">
+      <span>我的项目</span>
+      <div class="project-screen">
+        <nz-select [(ngModel)]="stateValue" style="width: 120px" (ngModelChange)="onScreen()">
+          <nz-option nzValue="" nzLabel="状态"></nz-option>
+          <nz-option [nzValue]="true" nzLabel="已发布"></nz-option>
+          <nz-option [nzValue]="false" nzLabel="未发布"></nz-option>
+        </nz-select>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 240px">
+          <input type="text" nz-input placeholder="请输入问卷名称进行搜索" [(ngModel)]="searchValue" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzSearch (click)="onScreen()"><nz-icon nzType="search" /></button>
+        </ng-template>
+      </div>
+    </div>
+    <div class="project-list">
+      <div class="project-item" *ngFor="let item of surveyList">
+        <div class="project-item-info flex-between align-items">
+          <div class="project-info-Left">{{ item.title }}</div>
+          <div class="project-info-right">
+            <span>ID：{{ item.id }}</span>
+            <span>状态：{{ item.state ? "已发布" : "未发布" }}</span>
+            <span>答题数：{{ getAnswerNumProject(item.id) }}</span>
+            <span>创建时间：{{ item.createTime }}</span>
+          </div>
+        </div>
+        <div class="project-item-operate flex-between align-items">
+          <div class="project-operate">
+            <span (click)="pushInvestigation(item.id)"><nz-icon nzType="form" />编辑问卷</span>
+            <span (click)="answer(item.id)"><nz-icon nzType="profile" />回答问卷</span>
+            <span (click)="dataAnalysis(item.id)"><nz-icon nzType="fund" />数据分析</span>
+          </div>
+          <div class="project-operate">
+            <span><nz-switch [(ngModel)]="item.state" (ngModelChange)="stateChange(item.id, item.state)" nzCheckedChildren="发布" nzUnCheckedChildren="停止" /></span>
+            <span (click)="copyClick(item)"><nz-icon nzType="copy" />复制</span>
+            <span (click)="erasure(item.id)"><nz-icon nzType="delete" />删除</span>
+          </div>
+        </div>
+      </div>
+      <nz-empty *ngIf="surveyList.length == 0"></nz-empty>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+.survey-item {
+  font-size: 16px;
+  padding: 10px;
+  border-bottom: 1px solid #efefef;
+
+  .show-concern {
+    color: #808084;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .survey-menu {
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .survey-menu-box {
+    display: none;
+
+    .menu-buttom {
+      float: right;
+
+      .ant-btn {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  &:hover .survey-menu-box {
+    display: block;
+  }
+}
+
+.required {
+  position: relative;
+
+  &::before {
+    content: "* ";
+    color: red;
+    margin-left: -10px;
+  }
+}
+
+.survey-title {
+  margin-bottom: 10px;
+}
+
+.survey-insert {
+  color: #40a9ff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.grid .ant-checkbox-group,
+.grid .ant-radio-group {
+  width: 100%;
+}
+
+.item-option {
+  width: 100%;
+  margin: 0;
+  line-height: 40px;
+  font-size: 16px;
+  padding: 0 10px;
+
+  &:hover {
+    background: #f9f9f9;
+  }
+}
+
+.item-logic {
+  color: #efa030;
+  font-size: 14px;
+}
+
+.item-editor {
+  padding: 15px;
+  border: 1px solid #efefef;
+  margin-top: 15px;
+  border-radius: 5px;
+
+  .editor-title {
+    .title {
+      padding-bottom: 10px;
+    }
+    .survey-hide {
+      cursor: pointer;
+      color: #a6a6a6;
+    }
+  }
+
+  .ant-table-cell {
+    padding: 10px;
+  }
+
+  .option-icon {
+    padding: 0 10px;
+    cursor: pointer;
+  }
+
+  .editor-type {
+    margin: 10px 0;
+
+    .editor-option {
+      font-size: 16px;
+    }
+  }
+
+  .option-tbody-top {
+    background: #e8e8e8;
+  }
+
+  .option-add {
+    padding: 5px 0;
+  }
+}
+
+.score-option {
+  padding: 10px;
+}
+
+.logic-set {
+  background: #e8e8e8;
+  padding: 10px;
+  margin-bottom: 15px;
+
+  a {
+    margin: 0 15px;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+}
+
+.hide {
+  color: #a6a6a6;
+}

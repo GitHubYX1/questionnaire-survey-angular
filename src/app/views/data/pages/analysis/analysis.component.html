@@ -1,0 +1,31 @@
+<nz-card class="analysis-list">
+  <screen-item (screenChange)="screenChange($event)"></screen-item>
+  <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 16 }" [nzLoading]="loading">
+    <div class="analysis-title">{{ titleText }}</div>
+    <div class="analysis-column flex-between align-items" *ngIf="startTime">
+      <div class="step-info">
+        <span>答题时间：{{ startTime }} 到 {{ endTime }}</span>
+        <span>测评量：{{ assessCount }}</span>
+      </div>
+      <button nz-button nzType="primary" [nzLoading]="downloadLoading" (click)="exportclick()">
+        <nz-icon nzType="download" />
+        进度报告
+      </button>
+    </div>
+    <div class="analysis-item" *ngFor="let item of topicData">
+      <ng-container *ngIf="item.type !== typeEnum.PARAGRAPH; else elseParagraph">
+        <div class="analysis-item-title">
+          {{ item.title }} <span>[{{ item.type }}]</span>
+        </div>
+        <analysis-table *ngIf="onFill(item.type); else elseFill" [tableData]="item"></analysis-table>
+        <ng-template #elseFill>
+          <button nz-button nzType="primary" (click)="lookInfo(item)">详细作答情况</button>
+        </ng-template>
+      </ng-container>
+      <ng-template #elseParagraph>
+        <div class="analysis-item-html" [innerHTML]="item.title"></div>
+      </ng-template>
+    </div>
+  </nz-skeleton>
+  <check-text #CheckTextComponent></check-text>
+</nz-card>

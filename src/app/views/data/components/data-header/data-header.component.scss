@@ -1,0 +1,63 @@
+.data-header {
+  height: 100%;
+  position: relative;
+}
+
+.data-source {
+  width: 380px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  line-height: 35px;
+  padding: 0 15px;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.anv-list {
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: 0;
+
+  .anv-item {
+    height: 100%;
+    padding: 0 20px;
+    cursor: pointer;
+    text-align: center;
+    line-height: normal;
+    font-size: 14px;
+    display: block;
+    color: #000;
+    margin: 0;
+
+    .anticon {
+      font-size: 26px;
+      margin: 6px;
+    }
+
+    &:hover {
+      background: #f7f7f7;
+    }
+  }
+  .ant-menu-item-selected {
+    background: #1890ff;
+    color: #fff;
+
+    &:hover {
+      background: #1890ff;
+    }
+  }
+}
+
+.option {
+  cursor: pointer;
+  font-size: 18px;
+
+  > span {
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="control-nav">
+  <div class="control-box" *ngFor="let item of contrlData">
+    <div class="control-title">{{ item.title }}</div>
+    <div class="control-list flex-between flex-wrap">
+      <div class="control-item" *ngFor="let children of item.children" (click)="clickControl(children)">
+        <nz-icon [nzType]="children.icon" />
+        {{ children.title }}
+      </div>
+    </div>
+  </div>
+  <button nz-button nzBlock nzType="primary" nzSize="large" (click)="download()">下载导入问卷模板</button>
+  <button nz-button nzBlock nzType="primary" nzSize="large" (click)="surveyUpload.uploadOpen()">导入问卷</button>
+</div>
+<survey-upload #SurveyUploadComponent (questionMaxId)="(questionMaxId)" (upload)="uploadData.emit($event)"></survey-upload>

@@ -1,0 +1,15 @@
+.matrix-editor-table {
+  width: 100%;
+  text-align: center;
+
+  th {
+    font-weight: normal;
+  }
+
+  .matrix-first {
+    width: 200px;
+  }
+  ::ng-deep .anticon-more {
+    cursor: pointer;
+  }
+}

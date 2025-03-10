@@ -1,0 +1,31 @@
+.answer-operate {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.record-operate {
+  font-size: 16px;
+
+  .anticon-eye {
+    cursor: pointer;
+
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  .anticon-delete {
+    cursor: pointer;
+    margin-left: 10px;
+
+    &:hover {
+      color: #ff4d4f;
+    }
+  }
+}
+
+.answer-index {
+  .ant-table-cell {
+    text-align: center;
+  }
+}

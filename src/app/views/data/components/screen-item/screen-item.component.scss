@@ -1,0 +1,74 @@
+.screen {
+  font-size: 16px;
+
+  .screen-head {
+    cursor: pointer;
+    .anticon {
+      margin-right: 10px;
+    }
+  }
+}
+
+.screen-box {
+  background: #f0f2f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  position: relative;
+
+  .screen-arrow {
+    position: absolute;
+    top: -5px;
+    left: 40px;
+    width: 10px;
+    height: 6px;
+    overflow: hidden;
+
+    > i {
+      display: block;
+      width: 10px;
+      height: 10px;
+      margin-top: 1px;
+      border: 1px solid #e0e0e0;
+      background: #f0f2f5;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+
+  .screen-subject {
+    width: 710px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+
+    .ant-radio-group {
+      border: 1px solid #d9d9d9;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    ::ng-deep .ant-radio-button-wrapper {
+      border: none;
+    }
+
+    .screen-condition {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .screen-select {
+      width: 300px;
+      margin-right: 10px;
+    }
+  }
+
+  .screen-item {
+    margin-top: 10px;
+  }
+}

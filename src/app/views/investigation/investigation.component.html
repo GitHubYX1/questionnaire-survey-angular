@@ -1,0 +1,53 @@
+<div class="investigation">
+  <div class="investigation-header flex-between">
+    <div>
+      <span class="go-back" nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="返回我的项目">
+        <nz-icon nzType="home" nzTheme="fill" (click)="goBack()" />
+      </span>
+      <span style="margin-left: 20px">创建问卷</span>
+    </div>
+    <div class="header-button flex-between align-items">
+      <button nz-button (click)="previewClick()">预 览</button>
+      <button nz-button nzType="primary" (click)="save(false)">保 存</button>
+      <button nz-button class="release" (click)="save(true)">发 布</button>
+    </div>
+  </div>
+  <div class="investigation-content">
+    <div class="investigation-panel">
+      <survey-control (questionMaxId)="(questionnaire.questionMaxId)" (deriveContrl)="questionnaire.deriveContrl($event)" (uploadData)="questionnaire.uploadData($event)"></survey-control>
+    </div>
+    <div class="investigation-editor">
+      <div class="editor-top" (click)="editorUpload.open(questionnaire.title, questionnaire.content)">
+        <div class="investigation-title">{{ questionnaire.title }}</div>
+        <div class="investigation-intro" *ngIf="questionnaire.content" [innerHTML]="questionnaire.content"></div>
+      </div>
+      <div class="editor-list">
+        <div class="survey-paging">
+          第1页（共{{ questionnaire.totalPage }}页）
+          <div class="paging-menu">
+            <span class="paging-insert" (click)="questionnaire.insert(questionnaire.insertNum !== -1 ? -1 : -2)">{{ questionnaire.insertNum !== -1 ? "在此题后插入新题" : "插入题目" }}</span>
+          </div>
+        </div>
+        <survey-item
+          *ngFor="let item of questionnaire.question; let i = index"
+          [index]="i"
+          [question]="item"
+          [insertNum]="questionnaire.insertNum"
+          [serialNum]="questionnaire.serialNum(item.id).num"
+          [showConcern]="showConcern(item.id)"
+          [optionLogic]="optionLogic(item.id)"
+          (batchOption)="batchOption($event)"
+          (concern)="concern($event)"
+        ></survey-item>
+        <div class="editor-empty" *ngIf="questionnaire.question.length == 0">
+          <nz-empty nzNotFoundContent="暂无题目" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<editor-title #EditorUploadComponent (titleModify)="questionnaire.titleModify($event)"></editor-title>
+<batch-add #BatchAddComponent></batch-add>
+<concern-front #ConcernFrontComponent (getFront)="questionnaire.getFront($event)"></concern-front>
+<concern-copy #ConcernCopyComponent (getCopy)="questionnaire.getCopy($event)"></concern-copy>
+<concern-option #ConcernOptionComponent (optionChange)="questionnaire.getControlOption($event)"></concern-option>

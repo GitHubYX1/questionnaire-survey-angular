@@ -1,0 +1,19 @@
+<nz-modal [(nzVisible)]="fileVisible" nzTitle="问卷导入" [nzMaskClosable]="false" (nzOnCancel)="onCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <div class="upload-box">
+      <div class="upload-file">
+        <button nz-button nzType="primary">
+          <nz-icon nzType="upload" nzTheme="outline" />
+          文件上传
+          <input type="file" class="upload-input" accept=".xlsx,.xls" (change)="importFile($event)" />
+        </button>
+        <span>{{ uploadText }}</span>
+      </div>
+      <nz-radio-group [(ngModel)]="uploadRadio">
+        <label nz-radio class="editor-option" nzValue="create">创建问卷</label>
+        <label nz-radio class="editor-option" nzValue="add">追加问卷</label>
+      </nz-radio-group>
+      <div class="upload-error">{{ errorText }}</div>
+    </div>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,23 @@
+.table-data {
+  margin-top: 15px;
+
+  .ant-table-cell {
+    text-align: center;
+  }
+
+  ::ng-deep .ant-progress {
+    .ant-progress-bg {
+      height: 12px !important;
+    }
+  }
+
+  .step-total {
+    text-align: center;
+    font-size: 18px;
+
+    span {
+      color: #4189ff;
+      font-weight: 700;
+    }
+  }
+}

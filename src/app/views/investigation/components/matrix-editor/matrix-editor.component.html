@@ -1,0 +1,83 @@
+<div class="matrix-editor">
+  <div class="matrix-editor">
+    <table *ngIf="question.type === typeEnum.MATRIX_SLIDER; else elseMatrix" class="matrix-editor-table" border="1">
+      <thead>
+        <tr>
+          <th class="matrix-first">行标题\选项</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of question.children; let i = index">
+          <td class="matrix-first">
+            <input nz-input [(ngModel)]="item.title" style="width: 85%" />
+            <nz-icon nz-dropdown [nzDropdownMenu]="menu" nzType="more" nzTheme="outline" />
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="removeRows.emit(i)">删除</li>
+                <li nz-menu-item (click)="addRows.emit(i)">添加</li>
+                <li nz-menu-item (click)="moveRows.emit({ rows: i, action: '上' })">上移</li>
+                <li nz-menu-item (click)="moveRows.emit({ rows: i, action: '下' })">下移</li>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
+          <td>
+            <slider-item [min]="question.option[0]" [max]="question.option[1]" [textShow]="false"></slider-item>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #elseMatrix>
+      <table class="matrix-editor-table" border="1">
+        <thead>
+          <tr>
+            <th class="matrix-first">行标题\选项</th>
+            <th *ngFor="let item of question.option; let i = index">
+              <input nz-input [(ngModel)]="item.content" style="width: 85%" />
+              <nz-icon nz-dropdown [nzDropdownMenu]="menu2" nzType="more" nzTheme="outline" />
+              <nz-dropdown-menu #menu2="nzDropdownMenu">
+                <ul nz-menu>
+                  <li nz-menu-item (click)="removeColumn.emit({ column: i, id: item.id })">删除</li>
+                  <li nz-menu-item (click)="addColumn.emit(i)">添加</li>
+                  <li nz-menu-item (click)="moveColumn.emit({ column: i, action: '上' })">左移</li>
+                  <li nz-menu-item (click)="moveColumn.emit({ column: i, action: '下' })">右移</li>
+                </ul>
+              </nz-dropdown-menu>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of question.children; let i = index">
+            <td class="matrix-first">
+              <input nz-input [(ngModel)]="item.title" style="width: 85%" />
+              <nz-icon nz-dropdown [nzDropdownMenu]="menu3" nzType="more" nzTheme="outline" />
+              <nz-dropdown-menu #menu3="nzDropdownMenu">
+                <ul nz-menu>
+                  <li nz-menu-item (click)="removeRows.emit(i)">删除</li>
+                  <li nz-menu-item (click)="addRows.emit(i)">添加</li>
+                  <li nz-menu-item (click)="moveRows.emit({ rows: i, action: '上' })">上移</li>
+                  <li nz-menu-item (click)="moveRows.emit({ rows: i, action: '下' })">下移</li>
+                </ul>
+              </nz-dropdown-menu>
+            </td>
+            <ng-container *ngIf="question.type === typeEnum.MATRIX_RADIO; else elseCheckbox">
+              <td *ngFor="let option of question.option">
+                <label nz-radio nzDisabled></label>
+              </td>
+            </ng-container>
+            <ng-template #elseCheckbox>
+              <td *ngFor="let option of question.option">
+                <label nz-checkbox nzDisabled></label>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+
+    <div class="option-add">
+      <button nz-button nzType="link" nzSize="large">添加行</button>
+      <button nz-button nzType="link" nzSize="large" *ngIf="question.type !== typeEnum.MATRIX_SLIDER">添加列</button>
+    </div>
+  </div>
+</div>

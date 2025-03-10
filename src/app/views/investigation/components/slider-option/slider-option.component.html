@@ -1,0 +1,8 @@
+<div class="slider-option">
+  <span>最小值：</span> <input nz-input style="width: 80px" [(ngModel)]="minNumber" #inputNumber (blur)="handleInputBlur(0, minNumber)" />
+  <span>最小值显示文本：</span>
+  <input nz-input style="width: 100px" [(ngModel)]="min.content" /> <br />
+  <span>最大值：</span> <input nz-input style="width: 80px" [(ngModel)]="maxNumber" (blur)="handleInputBlur(1, maxNumber)" />
+  <span>最大值显示文本：</span>
+  <input nz-input style="width: 100px" [(ngModel)]="max.content" />
+</div>

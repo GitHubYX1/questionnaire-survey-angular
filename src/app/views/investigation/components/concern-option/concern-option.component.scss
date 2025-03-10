@@ -1,0 +1,15 @@
+.option-box {
+  font-size: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  .option-condition {
+    text-align: left;
+    .option-control {
+      width: 480px;
+    }
+  }
+}
+
+.option-button {
+  margin-left: 100px;
+}

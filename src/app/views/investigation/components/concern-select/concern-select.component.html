@@ -1,0 +1,48 @@
+<div class="concern-select">
+  <form nz-form nzLayout="vertical" [formGroup]="formFront" class="front-list">
+    <div class="front-item" *ngFor="let item of concernData; let i = index">
+      <div class="front-title flex align-items">
+        <div class="front-text">
+          关联题目<span *ngIf="concernData.length > 1">{{ i + 1 }}</span> :
+        </div>
+        <div class="front-search flex-between align-items">
+          <nz-select nzShowSearch [(ngModel)]="item.value" style="width: 90%" name="first" (ngModelChange)="select(i, $event)" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let son of options" [nzLabel]="son.title" [nzValue]="son.id" [nzDisabled]="disabledMethod(son.id, item.value)"></nz-option>
+          </nz-select>
+          <ng-container *ngIf="showAdd">
+            <span *ngIf="i == 0; else elseCancel" (click)="frontAdd()">+更多</span>
+            <ng-template #elseCancel><span (click)="frontCancel(i, item.id)">-取消</span></ng-template>
+          </ng-container>
+        </div>
+      </div>
+      <div class="front-option" *ngIf="item.option.length">
+        <div class="front-tip">
+          <p>当“关联题目{{ i + 1 }}”选择下面的选项：</p>
+          <button nz-button nzSize="small" (click)="invert(i, item.id)">反选</button>
+        </div>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-checkbox-group [formControlName]="item.id">
+              <label class="flex front-checkbox" nz-checkbox *ngFor="let subItem of item.option" [nzValue]="subItem.id">{{ subItem.content }}</label>
+            </nz-checkbox-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div class="front-radio" *ngIf="concernData.length > 1">
+    <div class="front-title flex">
+      <div class="front-text">关联多题时：</div>
+      <span>多题（每个矩阵行标题视为一题）间</span>
+    </div>
+    <div class="front-option">
+      <nz-radio-group [(ngModel)]="conditionValue">
+        <label nz-radio nzValue="and"> 为“且”的关系</label>
+        <label nz-radio nzValue="or"> 为“或”的关系</label>
+      </nz-radio-group>
+    </div>
+  </div>
+  <button nz-button nzType="primary" nzDanger (click)="deleteAll()" style="margin-top: 20px" *ngIf="showAdd && ((concernData[0] && concernData[0].option.length) || concernData.length > 1)">
+    删除所有关联
+  </button>
+</div>

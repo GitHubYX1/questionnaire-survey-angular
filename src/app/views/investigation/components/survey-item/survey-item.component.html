@@ -1,0 +1,187 @@
+<div [class]="['survey-item', question.isHide === 1 ? 'hide' : '']">
+  <div *ngIf="question.type === typeEnum.PARAGRAPH; else elseTemplate" [innerHTML]="question.title"></div>
+  <ng-template #elseTemplate>
+    <div class="survey-paging" *ngIf="question.type === typeEnum.PAGING; else userTemplate">
+      {{ "第" + question.currentPage + "页（共" + questionnaire.totalPage + "页）" }}
+    </div>
+    <ng-template #userTemplate>
+      <div [class]="['survey-title', question.must ? 'required' : '']">{{ serialNum }}.{{ question.title }}</div>
+    </ng-template>
+  </ng-template>
+  <div class="survey-option" [ngSwitch]="question.type">
+    <nz-radio-group class="grid" [ngStyle]="generateColumn(question.column)" *ngSwitchCase="typeEnum.RADIO">
+      <label class="flex item-option" nz-radio *ngFor="let subItem of question.option" [nzValue]="subItem.id">
+        {{ subItem.content }}
+        <span *ngIf="optionLogic.length" class="item-logic">{{ optionLogicText(subItem.id, optionLogic) }}</span>
+      </label>
+    </nz-radio-group>
+    <nz-checkbox-group class="grid" [ngStyle]="generateColumn(question.column)" *ngSwitchCase="typeEnum.CHECKBOX">
+      <label class="flex item-option" nz-checkbox *ngFor="let subItem of question.option" [nzValue]="subItem.id">
+        {{ subItem.content }}
+        <span *ngIf="optionLogic.length" class="item-logic">{{ optionLogicText(subItem.id, optionLogic) }}</span>
+      </label>
+    </nz-checkbox-group>
+    <nz-select class="drop-down" nzPlaceHolder="请选择下拉列表" *ngSwitchCase="typeEnum.DROP">
+      @for (subItem of question.option; track subItem) {
+        <nz-option [nzValue]="subItem.id" [nzLabel]="subItem.content" nzCustomContent>
+          {{ subItem.content }}
+          <span *ngIf="optionLogic.length" class="item-logic">{{ optionLogicText(subItem.id, optionLogic) }}</span>
+        </nz-option>
+      }
+    </nz-select>
+    <nz-rate *ngSwitchCase="typeEnum.SCORE" [nzCount]="question.option.length"></nz-rate>
+    <ng-container *ngSwitchCase="typeEnum.FILL">
+      <input nz-input *ngIf="question.column === 1; else elseTemplate" />
+      <ng-template #elseTemplate>
+        <textarea nz-input [nzAutosize]="{ minRows: question.column }"></textarea>
+      </ng-template>
+    </ng-container>
+    <slider-item *ngSwitchCase="typeEnum.SLIDER" [min]="question.option[0]" [max]="question.option[1]"></slider-item>
+    <matrix-item *ngSwitchCase="matrixJudge(question.type)" [question]="question"></matrix-item>
+    <div *ngIf="showConcern" class="show-concern" [innerText]="showConcern"></div>
+    <div *ngIf="questionnaire.editId != question.id; else elseTemplate2" class="survey-menu">
+      <div class="survey-menu-box">
+        <span class="survey-insert">{{ insertNum !== index ? "在此题后插入新题" : "插入题目" }}</span>
+        <div class="menu-buttom">
+          <ng-container *ngIf="question.type !== typeEnum.PAGING">
+            <button nz-button nzType="primary" nzGhost nzSize="small" (click)="editCount()">编辑</button>
+            <button nz-button nzType="primary" nzGhost nzSize="small" (click)="copyClick()">复制</button>
+          </ng-container>
+          <button nz-button nzType="primary" nzGhost nzSize="small" (click)="erasureClick()">删除</button>
+          <button nz-button nzType="primary" nzGhost nzSize="small" (click)="moveClick('上')">上移</button>
+          <button nz-button nzType="primary" nzGhost nzSize="small" (click)="moveClick('下')">下移</button>
+          <button nz-button nzType="primary" nzGhost nzSize="small" (click)="moveClick('前')">最前</button>
+          <button nz-button nzType="primary" nzGhost nzSize="small" (click)="moveClick('后')">最后</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseTemplate2>
+      <div class="item-editor">
+        <ng-container *ngIf="question.type !== typeEnum.PARAGRAPH; else elseTemplate3">
+          <div class="editor-title">
+            <p class="title flex-between">
+              <span>题目标题：</span>
+              <span class="survey-hide" (click)="hideClick(question.isHide)">
+                <span nz-tooltip nzTooltipTitle="显示题目" nzTooltipPlacement="top" *ngIf="question.isHide === 1; else elseTemplate4">
+                  <nz-icon nzType="eye" nzTheme="outline" />
+                </span>
+                <ng-template #elseTemplate4>
+                  <span nz-tooltip nzTooltipTitle="隐藏题目" nzTooltipPlacement="top">
+                    <nz-icon nzType="eye-invisible" nzTheme="outline" />
+                  </span>
+                </ng-template>
+              </span>
+            </p>
+            <input nz-input [(ngModel)]="question.title" />
+          </div>
+          <div class="editor-type flex align-items">
+            @if (editorType.includes(question.type)) {
+              <nz-select class="drop-down" style="width: 120px; margin-right: 10px" [(ngModel)]="typeRadio" (ngModelChange)="typeChange()">
+                <nz-option [nzValue]="typeEnum.RADIO" nzLabel="单选"></nz-option>
+                <nz-option [nzValue]="typeEnum.CHECKBOX" nzLabel="多选"></nz-option>
+                <nz-option [nzValue]="typeEnum.FILL" nzLabel="填空"></nz-option>
+              </nz-select>
+            } @else if (matrixType.includes(question.type)) {
+              <nz-select class="drop-down" style="width: 120px; margin-right: 10px" [(ngModel)]="typeRadio" (ngModelChange)="typeChange()">
+                <nz-option [nzValue]="typeEnum.MATRIX_RADIO" nzLabel="矩阵单选"></nz-option>
+                <nz-option [nzValue]="typeEnum.MATRIX_CHECKBOX" nzLabel="矩阵多选"></nz-option>
+                <nz-option [nzValue]="typeEnum.MATRIX_SLIDER" nzLabel="矩阵滑动"></nz-option>
+              </nz-select>
+            }
+            <label nz-checkbox class="editor-option" [(ngModel)]="mustBoolean" (ngModelChange)="checkboxChange()">必答</label>
+            <ng-container *ngIf="question.type === typeEnum.CHECKBOX">
+              <nz-select [(ngModel)]="question.chooseMin" style="width: 120px; margin-right: 10px">
+                <nz-option [nzValue]="0" nzLabel="最少选几项"></nz-option>
+                <nz-option
+                  *ngFor="let item of question.option; let i = index"
+                  [nzValue]="i + 1"
+                  [nzDisabled]="question.chooseMax !== 0 && question.chooseMax <= i"
+                  [nzLabel]="'最少选' + (i + 1) + '项'"
+                ></nz-option>
+              </nz-select>
+              <nz-select [(ngModel)]="question.chooseMax" style="width: 120px; margin-right: 10px">
+                <nz-option [nzValue]="0" nzLabel="最多选几项"></nz-option>
+                <nz-option *ngFor="let item of question.option; let i = index" [nzValue]="i + 1" [nzDisabled]="question.chooseMin > i + 1" [nzLabel]="'最多选' + (i + 1) + '项'"></nz-option>
+              </nz-select>
+            </ng-container>
+            @if (question.type === typeEnum.RADIO || question.type === typeEnum.CHECKBOX) {
+              <nz-select [(ngModel)]="question.column" style="width: 100px">
+                <nz-option [nzValue]="1" nzLabel="一列"></nz-option>
+                <nz-option [nzValue]="2" nzLabel="两列"></nz-option>
+                <nz-option [nzValue]="3" nzLabel="三列"></nz-option>
+              </nz-select>
+            } @else if (question.type === typeEnum.FILL) {
+              <nz-select [(ngModel)]="question.validateType" style="width: 120px; margin-right: 10px" [nzOptions]="validateOption"></nz-select>
+              <nz-select [(ngModel)]="question.column" style="width: 100px">
+                <nz-option [nzValue]="1" nzLabel="一列"></nz-option>
+                <nz-option [nzValue]="2" nzLabel="两列"></nz-option>
+                <nz-option [nzValue]="3" nzLabel="三列"></nz-option>
+                <nz-option [nzValue]="4" nzLabel="四行"></nz-option>
+              </nz-select>
+            }
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate3>
+          <rich-tinymce [(inputValue)]="question.title"></rich-tinymce>
+        </ng-template>
+        @if (isBasicsOption(question.type)) {
+          <nz-table #basicTable nzBordered [nzData]="question.option" [nzShowPagination]="false">
+            <thead>
+              <tr>
+                <th nzAlign="center">选项文字</th>
+                <th nzAlign="center">上下移动</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of basicTable.data; let i = index">
+                <td nzAlign="center">
+                  <input nz-input [(ngModel)]="record.content" style="width: 80%" />
+                  <span class="option-icon"><nz-icon nzType="plus" nzTheme="outline" (click)="optionAddClick(i)" /></span>
+                  <span class="option-icon"><nz-icon nzType="minus" nzTheme="outline" (click)="optionRemoveClick(i, record.id)" /></span>
+                </td>
+                <td nzAlign="center">
+                  <span class="option-icon"><nz-icon nzType="arrow-up" nzTheme="outline" (click)="optionMoveClick(i, '上')" /></span>
+                  <span class="option-icon"><nz-icon nzType="arrow-down" nzTheme="outline" (click)="optionMoveClick(i, '上')" /></span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <div class="option-add">
+            <button nz-button nzType="link" nzSize="large" (click)="optionAddClick(-1)">添加选项</button>
+            <button nz-button nzType="link" nzSize="large" (click)="optionAddClick(-2)">批量添加</button>
+          </div>
+        } @else if (question.type === typeEnum.SCORE) {
+          <div class="score-option">
+            选项个数：
+            <nz-select style="width: 200px" [(ngModel)]="scoreOption" (ngModelChange)="scoreOptionChange($event)">
+              <nz-option *ngFor="let item of optionInit" [nzValue]="item.id" [nzLabel]="item.content"></nz-option>
+            </nz-select>
+          </div>
+        } @else if (matrixOption(question.type)) {
+          <matrix-editor
+            [question]="question"
+            (addRows)="addRows($event)"
+            (removeRows)="removeRows($event)"
+            (moveRows)="moveRows($event.rows, $event.action)"
+            (addColumn)="addColumn($event)"
+            (removeColumn)="optionRemoveClick($event.column, $event.id)"
+            (moveColumn)="optionMoveClick($event.column, $event.action)"
+          ></matrix-editor>
+        }
+        <slider-option
+          *ngIf="question.type === typeEnum.SLIDER || question.type === typeEnum.MATRIX_SLIDER"
+          [min]="question.option[0]"
+          [max]="question.option[1]"
+          (numChange)="sliderChange($event.num, $event.value)"
+        ></slider-option>
+        <div class="logic-set flex align-items">
+          <span>逻辑设置：</span>
+          <a (click)="concernClick(1)">题目向前关联</a>
+          <a (click)="concernClick(2)">复制向前关联</a>
+          <a (click)="concernClick(3)" *ngIf="question.type === typeEnum.RADIO || question.type === typeEnum.CHECKBOX || question.type === typeEnum.DROP">选项关联</a>
+        </div>
+        <button nz-button nzBlock nzType="primary" nzSize="large" (click)="questionnaire.resetting()">完成编辑</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

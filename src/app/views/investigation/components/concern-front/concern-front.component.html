@@ -1,0 +1,11 @@
+<nz-modal [(nzVisible)]="frontVisible" nzWidth="800px" nzTitle="题目向前关联" [nzMaskClosable]="false" (nzOnCancel)="frontVisible = false" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <div class="front-box">
+      <div class="front-title flex">
+        <div class="front-text">当前题目：</div>
+        {{ titleText }}
+      </div>
+      <concern-select [options]="questions" [childId]="childId" [control]="control" #ConcernSelectComponent></concern-select>
+    </div>
+  </ng-container>
+</nz-modal>

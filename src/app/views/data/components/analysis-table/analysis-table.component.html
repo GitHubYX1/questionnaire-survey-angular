@@ -1,0 +1,23 @@
+<div class="table-data">
+  <nz-table #basicTable [nzData]="tableData.option" nzBordered [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th>选项</th>
+        <th>样本量</th>
+        <th>比例</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{ item.content }}</td>
+        <td>{{ item.count }}</td>
+        <td>
+          <nz-progress [nzPercent]="item.ratio" nzStatus="active"></nz-progress>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <div class="step-total">
+    本题有效填写人次：<span>{{ tableData.assessCount }} </span> 人
+  </div>
+</div>
