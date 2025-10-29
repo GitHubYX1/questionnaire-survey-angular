@@ -19,7 +19,7 @@ export class ConcernCopyComponent {
   controlLogicData: controlLogicType | undefined;
   @Output() getCopy = new EventEmitter<{ id: number; childId: number[]; data: controlLogicType[] }>();
 
-  static copyOpen(data: questionType[], title: string, id: number, controlLogic: controlLogicType) {
+  static copyOpen(_: questionType[], __: string, ___: number, ____: controlLogicType) {
     throw new Error("方法未实现。");
   }
 

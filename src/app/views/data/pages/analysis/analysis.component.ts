@@ -38,7 +38,7 @@ export class AnalysisComponent {
   @ViewChild("CheckTextComponent") checkText = CheckTextComponent;
 
   constructor(public surveyStore: SurveyService) {
-    this.surveyStore.surveyId$.subscribe(async newData => {
+    this.surveyStore.surveyId$.subscribe(async () => {
       this.conditionValue = "and";
       this.screenAnswer = [];
       await this.queryData();

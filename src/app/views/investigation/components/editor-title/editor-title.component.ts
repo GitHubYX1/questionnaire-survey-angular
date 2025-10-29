@@ -19,7 +19,7 @@ export class EditorUploadComponent {
   contentValue = "";
   @Output() titleModify = new EventEmitter<{ title: string; content: string }>();
 
-  static open(title: string, content: string) {
+  static open(_: string, __: string) {
     throw new Error("方法未实现。");
   }
   open(title: string, content: string) {

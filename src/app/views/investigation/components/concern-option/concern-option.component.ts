@@ -29,7 +29,7 @@ export class ConcernOptionComponent {
 
   constructor(public questionnaire: QuestionnaireService) {}
 
-  static optionOpen(data: questionType[], title: string, option: optionType[], id: number, controlOption: controlLogicType[]) {
+  static optionOpen(_: questionType[], __: string, ___: optionType[], ____: number, _____: controlLogicType[]) {
     throw new Error("方法未实现。");
   }
 

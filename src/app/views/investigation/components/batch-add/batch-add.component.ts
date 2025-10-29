@@ -20,7 +20,7 @@ export class BatchAddComponent {
     public questionnaire: QuestionnaireService,
     private modal: NzModalService
   ) {}
-  static batchOpen(index: number, text: string) {
+  static batchOpen(_: number, __: string) {
     throw new Error("方法未实现。");
   }
   batchOpen(index: number, text: string) {

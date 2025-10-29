@@ -14,7 +14,7 @@ export class CheckTextComponent {
   checkShow = false;
   titleData = "";
   checkData: fillType[] = [];
-  static open(title: string, fill: fillType[]) {
+  static open(_: string, __: fillType[]) {
     throw new Error("方法未实现。");
   }
   open(title: string, fill: fillType[]) {

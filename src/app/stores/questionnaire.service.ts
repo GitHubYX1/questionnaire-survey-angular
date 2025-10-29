@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { typeEnum, validateEnum } from "assets/common/enums";
 import { mostValue, optionInit, scoreOptionInit, sliderInit } from "app/utils/index";
-import type { optionType, questionType, surveyType, controlLogicType, loadingType, controlOptionType } from "app/types/index";
+import type { optionType, questionType, surveyType, controlLogicType, controlOptionType } from "app/types/index";
 const { RADIO, CHECKBOX, DROP, SCORE, FILL, PAGING, SLIDER, MATRIX_RADIO, MATRIX_CHECKBOX, MATRIX_SLIDER } = typeEnum;
 const serialRemoveType = [typeEnum.PARAGRAPH, typeEnum.PAGING];
 const DEFAULT_QUESTIONNAIRE_TITLE = "测试问卷";

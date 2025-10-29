@@ -62,7 +62,7 @@ export class SurveyUploadComponent {
     //异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      const data = new Uint8Array(e.target.result);
+      const data: any = new Uint8Array(e.target.result);
       //解析文件流
       workbook.xlsx
         .load(data)

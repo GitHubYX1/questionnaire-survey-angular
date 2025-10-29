@@ -33,7 +33,7 @@ const fillValidateMap = {
 
 const questionItem = document.getElementsByClassName("question-item"); //获取题目元素
 
-const { RADIO, CHECKBOX, DROP, SCORE, FILL, PAGING, PARAGRAPH, SLIDER, MATRIX_RADIO, MATRIX_CHECKBOX, MATRIX_SLIDER } = typeEnum;
+const { PAGING, PARAGRAPH, MATRIX_RADIO, MATRIX_CHECKBOX, MATRIX_SLIDER } = typeEnum;
 
 @Component({
   selector: "app-question",

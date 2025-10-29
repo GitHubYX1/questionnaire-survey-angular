@@ -24,7 +24,7 @@ export class ConcernFrontComponent {
   control: controlLogicType | undefined;
   @Output() getFront = new EventEmitter<controlLogicType>();
   @ViewChild("ConcernSelectComponent") ConcernSelect = ConcernSelectComponent;
-  static frontOpen(data: questionType[], title: string, id: number, controlLogic: controlLogicType | undefined) {
+  static frontOpen(_: questionType[], __: string, ___: number, ____: controlLogicType | undefined) {
     throw new Error("方法未实现。");
   }
   //打开

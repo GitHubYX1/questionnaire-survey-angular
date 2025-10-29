@@ -30,7 +30,7 @@ export class AnswerComponent {
   loading = false;
   exportLoading = false;
   constructor(public surveyStore: SurveyService) {
-    this.surveyStore.surveyId$.subscribe(async newData => {
+    this.surveyStore.surveyId$.subscribe(async () => {
       this.conditionValue = "and";
       this.screenAnswer = [];
       await this.getData();
